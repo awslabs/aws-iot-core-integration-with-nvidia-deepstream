@@ -5,7 +5,7 @@ The adaptor implements the API for client applications to publish inference resu
 
 Installation Guide:
 ------------
-** Using pre-compiled share library (.so) file **
+**Using pre-compiled share library (.so) file**
 1. git clone this repo to Jetson device. We recommend you putting this into `<DeepStreamSDK>/sources/libs/`
 2. Create a thing on aws console following: https://docs.aws.amazon.com/iot/latest/developerguide/device-certs-create.html
 3. Download certificates (inluding root certificate) in step 4 in the link above to Jetson device.
