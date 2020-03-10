@@ -12,12 +12,12 @@ Installation Guide:
 4. Edit cfg_aws.txt with updated absolute paths to the certificates downloaded in step above, and replace `<YOUR IOT HOST ADDRESS>` with your AWS IoT end-point URL, which can be found in AWS IoT console → setting, in the box showing endpoint.
 5. Compile test app 4 and run it with the following command:
 ```
-./deepstream-test4-app -i ../../../../samples/streams/sample_720p.h264 -t test -p <\THIS REPO>/aws_protocol_adaptor/device_client/libnvds_aws_proto.so --conn-str=hello -c <\THIS REPO>/aws_protocol_adaptor/device_client/cfg_aws.txt
+./deepstream-test4-app -i ../../../../samples/streams/sample_720p.h264 -t test -p <THIS REPO>/aws_protocol_adaptor/device_client/libnvds_aws_proto.so --conn-str=hello -c <\THIS REPO>/aws_protocol_adaptor/device_client/cfg_aws.txt
 ```
 6. Compile and test app 5 by modifying test config file `<DeepStreamSDK>/sources/apps/sample_apps/deepstream-test5/configs/test5_config_file_src_infer.txt` on the following lines:
 ```
-msg-broker-proto-lib=<\THIS REPO>/aws_protocol_adaptor/device_client/libnvds_aws_proto.so
-msg-broker-config=<\THIS REPO>/aws_protocol_adaptor/device_client/cfg_aws.txt
+msg-broker-proto-lib=<THIS REPO>/aws_protocol_adaptor/device_client/libnvds_aws_proto.so
+msg-broker-config=<THIS REPO>/aws_protocol_adaptor/device_client/cfg_aws.txt
 ```
 
 **Optional: Only if you want to re-compile and modify .so file**
