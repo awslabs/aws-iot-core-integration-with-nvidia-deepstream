@@ -1,25 +1,7 @@
-################################################################################
-\# Copyright 2010-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-\# 
-\# Licensed under the Apache License, Version 2.0 (the "License").
-\# You may not use this file except in compliance with the License.
-\# A copy of the License is located at
-\# 
-\# http://aws.amazon.com/apache2.0
-\# 
-\# or in the "license" file accompanying this file. This file is distributed
-\# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-\# express or implied. See the License for the specific language governing
-\# permissions and limitations under the License.
-################################################################################
-
-This project implements protocol adaptor for AWS (edge to cloud messaging)
-The adaptor implements the nv_dsmi API for client applications to interface with it.
-
-Create AWS IoT Thing : https://docs.aws.amazon.com/iot/latest/developerguide/iot-gs.html
-NOTE: Once you have your IoT Thing created, please make sure you:
-1. Download certs into your edge device (default downloads to certs folder)
-2. Fill in the connection details in cfg_aws.txt
+AWS IoT Core Integration with NVIDIA DeepStream
+------------
+This project implements protocol adaptor between NVIDIA DeepStream SDK and AWS (edge to cloud messaging).
+The adaptor implements the API for client applications to publish inference results or metadata using MQTT messages to AWS IoT Core.
 
 Installation Guide:
 ------------
