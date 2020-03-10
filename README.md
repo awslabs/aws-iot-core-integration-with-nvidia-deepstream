@@ -28,12 +28,6 @@ msg-broker-config=<THIS REPO>/aws_protocol_adaptor/device_client/cfg_aws.txt
    Current AWS IoT SDK does not support 2.21 (development branch). They have an issue tracker for this: https://github.com/aws/aws-iot-device-sdk-embedded-C/issues/814
 4. Run 'make' in `aws_protocol_adaptor/device_client`. (Or make clean to clean any compiled files.)
 
-AWS cfg:
-----------
-Please set up your cfg files after you register your device on AWS cloud and download your certs.
-NOTE: DO NOT delete the line [message-broker] inside the cfg file. Its the section identifier used for parsing.
-
-
 Set message properties:
 -----------------------
 Some additional message properties like buffer size, can be set in `aws_iot_config.h`. If you want to change any of these settings, you will have to compile your own .so file.
@@ -41,11 +35,12 @@ Some additional message properties like buffer size, can be set in `aws_iot_conf
 For we used QoS 0 for all the send functions. However, you can adjust to QoS 1 in message broker source code: `aws_nvmsgbroker.c`.
 
 To adjust the level of IOT logging, please go to Makefile and comment or un-comment the following lines.
-
+```
 LOG_FLAGS += -DENABLE_IOT_DEBUG
 LOG_FLAGS += -DENABLE_IOT_INFO
 LOG_FLAGS += -DENABLE_IOT_WARN
 LOG_FLAGS += -DENABLE_IOT_ERROR
+```
 
 ## License
 
