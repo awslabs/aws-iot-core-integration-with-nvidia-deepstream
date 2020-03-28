@@ -26,6 +26,10 @@ msg-broker-config=<THIS REPO>/aws_protocol_adaptor/device_client/cfg_aws.txt
    Current SDK version is 3, support for AWS IoT SDK version 4 is in our pipeline. (Version 4 is currently in Beta testing.)
 3. Download mbedTLS (before version 2.16) into `aws-iot-sdk/external_libs/mbedTLS` folder from https://github.com/ARMmbed/mbedtls
    Current AWS IoT SDK does not support 2.21 (development branch). They have an issue tracker for this: https://github.com/aws/aws-iot-device-sdk-embedded-C/issues/814
+   Run this command in the `aws-iot-sdk folder` to achieve this:
+   ```
+   wget -qO- https://github.com/ARMmbed/mbedtls/archive/mbedtls-2.16.5.tar.gz | tar xvz -C external_libs/mbedTLS --strip-components=1
+   ```
 4. Run 'make' in `aws_protocol_adaptor/device_client`. (Or make clean to clean any compiled files.)
 
 Set message properties:
