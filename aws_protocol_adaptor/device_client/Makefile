@@ -53,13 +53,13 @@ IOT_SRC_FILES += $(shell find $(PLATFORM_DIR)/ -name '*.c')
 IOT_SRC_FILES += $(shell find $(PLATFORM_COMMON_DIR)/ -name '*.c')
 
 #TLS - mbedtls
-MBEDTLS_DIR = $(IOT_CLIENT_DIR)/external_libs/mbedTLS
+MBEDTLS_DIR = $(IOT_CLIENT_DIR)/external_libs/mbedTLS/mbedtls
 TLS_LIB_DIR = $(MBEDTLS_DIR)/library
 CRYPTO_LIB_DIR = $(MBEDTLS_DIR)/crypto/library
 TLS_INCLUDE_DIR = -I $(MBEDTLS_DIR)/include
 EXTERNAL_LIBS += -L$(TLS_LIB_DIR)
 LD_FLAG += -Wl,-rpath,$(TLS_LIB_DIR)
-LD_FLAG += -ldl $(TLS_LIB_DIR)/libmbedtls.a $(CRYPTO_LIB_DIR)/libmbedcrypto.a $(TLS_LIB_DIR)/libmbedx509.a -lpthread
+LD_FLAG += -ldl $(TLS_LIB_DIR)/libmbedtls.a $(TLS_LIB_DIR)/libmbedcrypto.a $(TLS_LIB_DIR)/libmbedx509.a -lpthread
 
 # GLibs
 DP_SOURCE_DIR = ../../..
@@ -98,7 +98,7 @@ MAKE_OBJ_CMD = $(CC) -c -fPIC $(SRC_FILES) $(COMPILER_FLAGS) $(LD_FLAG) $(EXTERN
 
 OBJS:=./*.o
 TLS_OBJS=$(TLS_LIB_DIR)/*.o
-MAKE_LIB_CMD = $(CC) -shared -fPIC -o libnvds_aws_proto.so $(OBJS) $(TLS_OBJS) 
+MAKE_LIB_CMD = $(CC) -shared -fPIC -o libnvds_aws_proto.so $(OBJS) $(TLS_OBJS) ${LIBS}
 MAKE_TEST_CMD = $(CC) $(SRC_FILES) $(APP_SRC_FILES) $(COMPILER_FLAGS) $(LD_FLAG) $(EXTERNAL_LIBS) $(INCLUDE_ALL_DIRS) $(LIBS) -o $(APP_NAME)
 
 all:
