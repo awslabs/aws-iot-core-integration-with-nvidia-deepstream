@@ -22,10 +22,20 @@ msg-broker-config=<THIS REPO>/aws_protocol_adaptor/device_client/cfg_aws.txt
 
 **Optional: Only if you want to re-compile and modify .so file**
 1. Installing all the necessary dependencies for Deepstream App following NVIDIA installation guide https://docs.nvidia.com/metropolis/deepstream/4.0/dev-guide/index.html. And verify that deepstream-app builds and runs successfully.
-2. Download AWS iot embedded C SDK into aws-iot-sdk folder from https://github.com/aws/aws-iot-device-sdk-embedded-C
+2. GIT clone AWS iot embedded C SDK into aws-iot-sdk folder from https://github.com/aws/aws-iot-device-sdk-embedded-C
    Current SDK version is 3, support for AWS IoT SDK version 4 is in our pipeline. (Version 4 is currently in Beta testing.)
-3. Download mbedTLS (before version 2.16) into `aws-iot-sdk/external_libs/mbedTLS` folder from https://github.com/ARMmbed/mbedtls
-   Current AWS IoT SDK does not support 2.21 (development branch). They have an issue tracker for this: https://github.com/aws/aws-iot-device-sdk-embedded-C/issues/814
+```
+mkdir <DeepStream SDK PATH>/sources/libs/aws_protocol_adaptor/aws-iot-sdk
+cd <DeepStream SDK PATH>/sources/libs/aws_protocol_adaptor/aws-iot-sdk
+git clone https://github.com/aws/aws-iot-device-sdk-embedded-C.git .
+```
+3. GIT clone mbedTLS (before version 2.16) into `aws-iot-sdk/external_libs/mbedTLS` folder from https://github.com/ARMmbed/mbedtls
+
+```
+cd <DeepStream SDK PATH>/sources/libs/aws_protocol_adaptor/aws-iot-sdk/external_libs/mbedTLS
+git clone https://github.com/ARMmbed/mbedtls.git
+```
+
 4. Run 'make' in `aws_protocol_adaptor/device_client`. (Or make clean to clean any compiled files.)
 
 Set message properties:
