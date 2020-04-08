@@ -259,6 +259,7 @@ void nvds_msgapi_do_work(NvDsMsgApiHandle h_ptr)
 	{
 		need_to_yield = true;
 	}
+	IOT_DEBUG("Current queue length: %d\n", g_queue_get_length(work_queue));
 	if (g_queue_is_empty(work_queue))
 	{
 		IOT_INFO("Work queue empty.");
@@ -276,19 +277,21 @@ void nvds_msgapi_do_work(NvDsMsgApiHandle h_ptr)
 		}
 		return;
 	}
-	Work *work_node = (Work *)g_queue_pop_head(work_queue);
-	AWS_IoT_Client *client = (AWS_IoT_Client *)work_node->h_ptr;
-	rc = _mqtt_msg_send(client, work_node->topic, work_node->payload, work_node->payload_size);
+	while (! g_queue_is_empty(work_queue)){
+		Work *work_node = (Work *)g_queue_pop_head(work_queue);
+		AWS_IoT_Client *client = (AWS_IoT_Client *)work_node->h_ptr;
+		rc = _mqtt_msg_send(client, work_node->topic, work_node->payload, work_node->payload_size);
 
-	g_free(work_node);
-	if (SUCCESS != rc)
-	{
-		IOT_ERROR("Unable to publish, error: %d\n", rc);
-		if (work_node->call_back_handler != NULL)
+		g_free(work_node);
+		if (SUCCESS != rc)
 		{
-			work_node->call_back_handler(work_node->user_ptr, NVDS_MSGAPI_ERR);
+			IOT_ERROR("Unable to publish, error: %d\n", rc);
+			if (work_node->call_back_handler != NULL)
+			{
+				work_node->call_back_handler(work_node->user_ptr, NVDS_MSGAPI_ERR);
+			}
+			return;
 		}
-		return;
 	}
 	last_send_time_stamp = current_time_stamp;
 	// if (work_node->call_back_handler != NULL){

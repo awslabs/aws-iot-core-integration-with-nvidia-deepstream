@@ -74,6 +74,7 @@ void send_callback(void *user_ptr, NvDsMsgApiErrorType completion_flag)
         g_print("Thread [%d] , Message num %d : send success\n", info->tid, info->num);
     else
         g_print("Thread [%d] , Message num %d : send failed\n", info->tid, info->num);
+    g_free(info);
 }
 
 void *func(void *ptr)
@@ -86,7 +87,9 @@ void *func(void *ptr)
     sprintf(cTopic_send_async, "%s", "sdkTest/sub");
     for (int i = 0; i < 10; i++)
     {
-        struct send_info_t myinfo = {myid, i};
+        struct send_info_t *myinfo = g_malloc(sizeof(struct send_info_t));
+        myinfo->tid = myid;
+        myinfo->num = i;
         nvds_msgapi_send_async_ptr(conn, cTopic_send_async, (const uint8_t *)cPayload_send_async, strlen(cPayload_send_async), send_callback, &myinfo);
         sleep(0.5);
     }
@@ -136,13 +139,13 @@ int main(int argc, char **argv)
     /* ************************************************************************* */
     for (int i = 0; i < NUM_THREADS * 15; i++)
     {
-        g_print("doing work.");
+        g_print("doing work.\n");
         nvds_msgapi_do_work_ptr(conn);
     }
     /* ************************************************************************* */
     // Disconnect call
     /* ************************************************************************* */
-    g_print("Disconnecting.");
+    g_print("Disconnecting.\n");
     nvds_msgapi_disconnect_ptr(conn);
 
     return 0;
