@@ -281,8 +281,6 @@ void nvds_msgapi_do_work(NvDsMsgApiHandle h_ptr)
 		Work *work_node = (Work *)g_queue_pop_head(work_queue);
 		AWS_IoT_Client *client = (AWS_IoT_Client *)work_node->h_ptr;
 		rc = _mqtt_msg_send(client, work_node->topic, work_node->payload, work_node->payload_size);
-
-		g_free(work_node);
 		if (SUCCESS != rc)
 		{
 			IOT_ERROR("Unable to publish, error: %d\n", rc);
@@ -290,12 +288,15 @@ void nvds_msgapi_do_work(NvDsMsgApiHandle h_ptr)
 			{
 				work_node->call_back_handler(work_node->user_ptr, NVDS_MSGAPI_ERR);
 			}
+			g_free(work_node);
 			return;
 		}
+		if (work_node->call_back_handler != NULL){
+			IOT_INFO("Pointer callback.");
+			work_node->call_back_handler(work_node->user_ptr, NVDS_MSGAPI_OK);
+		}
+		g_free(work_node);
 	}
 	last_send_time_stamp = current_time_stamp;
-	// if (work_node->call_back_handler != NULL){
-	// 	work_node->call_back_handler(work_node->user_ptr, NVDS_MSGAPI_OK);
-	// }
 	return;
 }
