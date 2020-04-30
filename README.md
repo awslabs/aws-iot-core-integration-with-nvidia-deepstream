@@ -24,8 +24,7 @@ cd aws-iot-core-integration-with-nvidia-deepstream
 cp -r aws_protocol_adaptor ${DEEPSTREAM_SDK_PATH}/sources/libs
 ```
 
-### [Optional] Step 2: Manually build the shared library
-### You can skip this step if you want to use the .so file that we built for you.
+### [Optional] Step 2: Manually build the shared library (You can skip this step if you want to use the .so file that we built for you.)
 
 he shared library (.so file) is built and checked in the git repo you cloned in Step 1 in the aws_protocol_adaptor/device_client directory. If you want to build and customize your shared library, you can follow step 2 to compile with customized features such as optimized buffer size for incoming or outgoing MQTT messages, or TLS connection timeout values.
 
@@ -50,7 +49,7 @@ make
 If you inspect this current folder, you should see the libnvds_aws_proto.so file just updated.
 
 ### Step 3: Provision DeepStream App with AWS IoT credentials
-Navigate to AWS web console, and go to *IoT Core *service. On the left-side menu, click on *Secure* → *Policies*. And on the right upper corner, click on *Create*. A window would appear to help you create a policy for your thing you are about to create for DeepStream Application. You can also do this with AWS CLI. Please refer to [AWS IoT Policy Elements](https://docs.aws.amazon.com/iot/latest/developerguide/example-iot-policies-elements.html) for list of actions in AWS IoT to allow or deny.
+Navigate to AWS web console, and go to *IoT Core* service. On the left-side menu, click on *Secure* → *Policies*. And on the right upper corner, click on *Create*. A window would appear to help you create a policy for your thing you are about to create for DeepStream Application. You can also do this with AWS CLI. Please refer to [AWS IoT Policy Elements](https://docs.aws.amazon.com/iot/latest/developerguide/example-iot-policies-elements.html) for list of actions in AWS IoT to allow or deny.
 
 After creating the policy, you can then create a thing for DeepStream Application. You can do this on AWS console by going to the left-side AWS IoT service page, click on *Manage->Things.* And on the right upper corner, click on *Create*. This would start the process of creating a thing on AWS IoT. You can also do this with AWS CLI. Please note down the thing name you have used to create this thing, you will later need it.
 
