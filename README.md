@@ -6,7 +6,7 @@ The adaptor implements the API for client applications to publish inference resu
 
 * AWS account admin console access (for this tutorial)
 * A Jetson device with DeepStream SDK installed and public internet access
-* Gstreamer installation as described in the NVIDIA documentation (https://docs.nvidia.com/jetson/l4t/index.html#page/Tegra%20Linux%20Driver%20Package%20Development%20Guide/accelerated_gstreamer.html)
+* Gstreamer installation as described in the [NVIDIA documentation](https://docs.nvidia.com/jetson/l4t/index.html#page/Tegra%20Linux%20Driver%20Package%20Development%20Guide/accelerated_gstreamer.html)
 
 For the convenience of this installation, we can create an environment variable of the path where you DeepStream SDK is installed. Please replace <DeepStream SDK PATH> to the path of your DeepStream SDK on your Jetson device:
 ```
@@ -16,7 +16,7 @@ export DEEPSTREAM_SDK_PATH=<DeepStream SDK PATH>
 ## Installation Guide:
 ### Step 1: Download AWS DeepStream adaptor
 
-In your Jetson device, navigate to Downloads folder, then download or clone the AWS managed GitHub (https://github.com/awslabs/aws-iot-core-integration-with-nvidia-deepstream) repo. Copy the aws_protocol_adaptor sub-folder to  ${DEEPSTREAM_SDK_PATH}/sources/libs.
+In your Jetson device, navigate to Downloads folder, then download or clone the [AWS managed GitHub](https://github.com/awslabs/aws-iot-core-integration-with-nvidia-deepstream) repo. Copy the aws_protocol_adaptor sub-folder to  ${DEEPSTREAM_SDK_PATH}/sources/libs.
 ```
 cd ~/Downloads
 git clone git@github.com:awslabs/aws-iot-core-integration-with-nvidia-deepstream.git
@@ -29,7 +29,7 @@ cp -r aws_protocol_adaptor ${DEEPSTREAM_SDK_PATH}/sources/libs
 
 he shared library (.so file) is built and checked in the git repo you cloned in Step 1 in the aws_protocol_adaptor/device_client directory. If you want to build and customize your shared library, you can follow step 2 to compile with customized features such as optimized buffer size for incoming or outgoing MQTT messages, or TLS connection timeout values.
 
-If cloned or downloaded successfully, aws_protocol_adaptor should appear in your current path. Next, we need to create an empty directory for AWS IoT device SDK (https://github.com/aws/aws-iot-device-sdk-embedded-C) library. We also need to clone the AWS IoT device SDK (https://github.com/aws/aws-iot-device-sdk-embedded-C) in Embedded-C version 3 into this empty directory we created.
+If cloned or downloaded successfully, aws_protocol_adaptor should appear in your current path. Next, we need to create an empty directory for [AWS IoT device SDK](https://github.com/aws/aws-iot-device-sdk-embedded-C) library. We also need to clone the [AWS IoT device SDK](https://github.com/aws/aws-iot-device-sdk-embedded-C) in Embedded-C version 3 into this empty directory we created.
 ```
 mkdir ${DEEPSTREAM_SDK_PATH}/sources/libs/aws_protocol_adaptor/aws-iot-sdk
 cd ${DEEPSTREAM_SDK_PATH}/sources/libs/aws_protocol_adaptor/aws-iot-sdk
@@ -50,9 +50,7 @@ make
 If you inspect this current folder, you should see the libnvds_aws_proto.so file just updated.
 
 ### Step 3: Provision DeepStream App with AWS IoT credentials
-Navigate to AWS web console, and go to *IoT Core *service. On the left-side menu, click on *Secure* → *Policies*. And on the right upper corner, click on *Create*. A window would appear to help you create a policy for your thing you are about to create for DeepStream Application. You can also do this with AWS CLI. Please refer to:
-https://docs.aws.amazon.com/iot/latest/developerguide/example-iot-policies-elements.html 
-for list of actions in AWS IoT to allow or deny.
+Navigate to AWS web console, and go to *IoT Core *service. On the left-side menu, click on *Secure* → *Policies*. And on the right upper corner, click on *Create*. A window would appear to help you create a policy for your thing you are about to create for DeepStream Application. You can also do this with AWS CLI. Please refer to [AWS IoT Policy Elements](https://docs.aws.amazon.com/iot/latest/developerguide/example-iot-policies-elements.html) for list of actions in AWS IoT to allow or deny.
 
 After creating the policy, you can then create a thing for DeepStream Application. You can do this on AWS console by going to the left-side AWS IoT service page, click on *Manage->Things.* And on the right upper corner, click on *Create*. This would start the process of creating a thing on AWS IoT. You can also do this with AWS CLI. Please note down the thing name you have used to create this thing, you will later need it.
 
@@ -128,23 +126,23 @@ Now navigate to AWS IoT console, and on the menu bar on the left, click on test,
 
 #### Processing IoT messages with AWS IoT rule
 Once you see messages coming into AWS IoT Core, there are a lot of options to further process them or store them on AWS cloud. One simple example would be to push these messages, using AWS IoT Rules, to a customized AWS Lambda function, which parses the messages and puts them in Amazon DynamoDB. You may find the following documents helpful in setting up this IoT rule to storage pipeline: 
-Creating a Rule with a AWS Lambda Action (https://docs.aws.amazon.com/iot/latest/developerguide/iot-lambda-rule.html) 
-Reading and Writing A Single Item in DynamoDB (https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/dynamodb-example-table-read-write.html) 
-Implementing a Serverless AWS IoT Backend with AWS Lambda and Amazon DynamoDB (https://aws.amazon.com/blogs/compute/implementing-a-serverless-aws-iot-backend-with-aws-lambda-and-amazon-dynamodb/)
+* [Creating a Rule with a AWS Lambda Action](https://docs.aws.amazon.com/iot/latest/developerguide/iot-lambda-rule.html) 
+* [Reading and Writing A Single Item in DynamoDB](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/dynamodb-example-table-read-write.html) 
+* [Implementing a Serverless AWS IoT Backend with AWS Lambda and Amazon DynamoDB](https://aws.amazon.com/blogs/compute/implementing-a-serverless-aws-iot-backend-with-aws-lambda-and-amazon-dynamodb/)
 
 The following documents may further assist you building a more production-ready data pipeline:
-AWS IoT Analytics Console Quick Start Guide (https://docs.aws.amazon.com/iotanalytics/latest/userguide/quickstart.html)
-Integrating IoT data with your data lake with new AWS IoT Analytics features (https://aws.amazon.com/blogs/iot/integrating-iot-data-with-your-data-lake-with-new-aws-iot-analytics-features/)
-Real-Time IoT Device Monitoring with Kinesis Data Analytics (https://aws.amazon.com/solutions/real-time-iot-device-monitoring-with-kinesis/)
-Writing to Kinesis Data Firehose Using AWS IoT (https://docs.aws.amazon.com/firehose/latest/dev/writing-with-iot.html)
+* [AWS IoT Analytics Console Quick Start Guide](https://docs.aws.amazon.com/iotanalytics/latest/userguide/quickstart.html)
+* [Integrating IoT data with your data lake with new AWS IoT Analytics features](https://aws.amazon.com/blogs/iot/integrating-iot-data-with-your-data-lake-with-new-aws-iot-analytics-features/)
+* [Real-Time IoT Device Monitoring with Kinesis Data Analytics](https://aws.amazon.com/solutions/real-time-iot-device-monitoring-with-kinesis/)
+* [Writing to Kinesis Data Firehose Using AWS IoT](https://docs.aws.amazon.com/firehose/latest/dev/writing-with-iot.html)
 
 ### Compatible with AWS IoT Greengrass
 
 This AWS DeepStream adaptor also supports connecting to AWS IoT Greengrass. You can modify <YOUR IOT HOST ADDRESS> in cfg_aws.txt to your Greengrass Endpoint/IP address. 
 
-There are several options to find out Greengrass Endpoint/IP address. If you know the IP address of your Greengrass device or run “ifconfig” on your Greengrass device to find it out, you can directly put that as <YOUR IOT HOST ADDRESS>. AWS IoT Greengrass also provides a Discovery API (https://docs.aws.amazon.com/greengrass/latest/developerguide/gg-discover-api.html), enabling devices to retrieve information required to connect to an AWS IoT Greengrass core that is in the same Greengrass group as the device. 
+There are several options to find out Greengrass Endpoint/IP address. If you know the IP address of your Greengrass device or run “ifconfig” on your Greengrass device to find it out, you can directly put that as <YOUR IOT HOST ADDRESS>. AWS IoT Greengrass also provides a [Discovery API](https://docs.aws.amazon.com/greengrass/latest/developerguide/gg-discover-api.html), enabling devices to retrieve information required to connect to an AWS IoT Greengrass core that is in the same Greengrass group as the device. 
 
-For further information on enabling your device to connect to AWS IoT Greengrass, please follow module 4 in AWS IoT Greengrass developer guide (https://docs.aws.amazon.com/greengrass/latest/developerguide/module4.html).
+For further information on enabling your device to connect to AWS IoT Greengrass, please follow module 4 in [AWS IoT Greengrass developer guide](https://docs.aws.amazon.com/greengrass/latest/developerguide/module4.html).
 
 ## Re-compiling Guide:
 You can always change this library to suit your own need. Please make the change the code and follow "Step 2: Manually build the shared library" section to make a new shared library for DeepStream.
