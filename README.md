@@ -8,7 +8,7 @@ The adaptor implements the API for client applications to publish inference resu
 * A Jetson device with DeepStream SDK installed and public internet access
 * Gstreamer installation as described in the [NVIDIA documentation](https://docs.nvidia.com/jetson/l4t/index.html#page/Tegra%20Linux%20Driver%20Package%20Development%20Guide/accelerated_gstreamer.html)
 
-For the convenience of this installation, we can create an environment variable of the path where you DeepStream SDK is installed. Please replace <DeepStream SDK PATH> to the path of your DeepStream SDK on your Jetson device:
+For the convenience of this installation, we can create an environment variable of the path where you DeepStream SDK is installed. Please replace <DeepStream SDK PATH> to the path of your DeepStream SDK on your Jetson device. (For DeepStream 5.0, the default installation path is "/opt/nvidia/deepstream/deepstream-5.0/".)
 ```
 export DEEPSTREAM_SDK_PATH=<DeepStream SDK PATH>
 ```
