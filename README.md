@@ -19,7 +19,7 @@ export DEEPSTREAM_SDK_PATH=<DeepStream SDK PATH>
 In your Jetson device, navigate to Downloads folder, then download or clone the [AWS managed GitHub](https://github.com/awslabs/aws-iot-core-integration-with-nvidia-deepstream) repo. Copy the aws_protocol_adaptor sub-folder to  ${DEEPSTREAM_SDK_PATH}/sources/libs.
 ```
 cd ~/Downloads
-git clone git@github.com:awslabs/aws-iot-core-integration-with-nvidia-deepstream.git
+git clone https://github.com/awslabs/aws-iot-core-integration-with-nvidia-deepstream.git
 cd aws-iot-core-integration-with-nvidia-deepstream
 cp -r aws_protocol_adaptor ${DEEPSTREAM_SDK_PATH}/sources/libs
 ```
