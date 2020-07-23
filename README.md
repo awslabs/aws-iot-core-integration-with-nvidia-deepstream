@@ -64,7 +64,7 @@ XXX-certificate.pem.crt
 XXX-private.pem.key
 XXX-public.pem.key
 AmazonRootCA1.pem
-``` 
+```
 You can change them to:
 ```
 certificatePem.cert.pem
@@ -72,22 +72,28 @@ privateKey.private.key
 publicKey.public.key
 root.ca.pem
 ```
-You can then make a cert folder on your Jetson device, and transfer these downloaded certificates and keys to your Jetson device. In this demo, we are going to put these certificates in the following directory. 
+You can then make a cert folder on your Jetson device, and transfer these downloaded certificates and keys to your Jetson device. In this demo, we are going to put these certificates in the following directory.
 ```
 mkdir ${DEEPSTREAM_SDK_PATH}/sources/libs/aws_protocol_adaptor/device_client/certs
 mv <4 CERTS FILES> ${DEEPSTREAM_SDK_PATH}/sources/libs/aws_protocol_adaptor/device_client/certs
 ```
 On your Jetson device, navigate to:
 ```
-cd ${DEEPSTREAM_SDK_PATH}/sources/libs/aws_protocol_adaptor/device_client/ 
+cd ${DEEPSTREAM_SDK_PATH}/sources/libs/aws_protocol_adaptor/device_client/
 ```
 Edit cfg_aws.txt:
 * Replace <YOUR IOT HOST ADDRESS> with your AWS IoT Endpoint URL, which can be found in the AWS IoT console → setting, in the box showing Endpoint.
 * Replace <DEEPSTREAM SDK PATH> to the *absolute* *path* of your DeepStream SDK PATH. (WARNING: Using relative path sometimes would cause certificate parsing failure error).
-* Replace the values of both ThingName and ClientID with the name of the thing created above. 
+* Replace the values of both ThingName and ClientID with the name of the thing created above.
 
 ### Step 5: Run Deepstream App
 We are going to use the test apps developed by NVIDIA to verify our adaptor setup. We are going to run tests with both test4 and test5 in NVIDIA DeepStream SDK sample app folder. The deepstream-test4 can be used to demonstrate adding custom objects as NVDS_EVENT_MSG_META user metadata with buffers for generating a custom payload to be published to AWS IoT Core. The deepstream-test5 can demonstrate how to use "nvmsgconv" and "nvmsgbroker" plugins in the pipeline, create NVDS_META_EVENT_MSG type of meta, and upload to AWS IoT Core. Both apps can help verify the installation and functionalities of this message broker.
+
+#### Install dependency on your Jetson
+Install libgstrtspserver-1.0-dev
+```
+sudo apt-get install libgstrtspserver-1.0-dev
+```
 #### Test App 4
 Please first navigate to test4 in your DeepStream SDK, and make the app:
 ```
@@ -102,14 +108,14 @@ Now navigate to AWS IoT console, and on the menu bar on the left, click on test,
 ![Image of success](./success_screen.png)
 
 #### Test App 5
-Please navigate to test5 in your DeepStream SDK, and make the app
+Please navigate to test5 in your DeepStream SDK, and make the app. Please note you need a display connected for this test app.
 ```
 cd ${DEEPSTREAM_SDK_PATH}/sources/apps/sample_apps/deepstream-test5
 make
 ```
 In order to run deepstream-test5, you also need to modify your configuration file to point at the shared library.
 ```
-cp configs/test5_config_file_src_infer.txt configs/test5_config_file_src_infer_aws.txt 
+cp configs/test5_config_file_src_infer.txt configs/test5_config_file_src_infer_aws.txt
 vim configs/test5_config_file_src_infer_aws.txt
 ```
 You can then, modify msg-broker-proto-lib under your message broker sink (sink1), to point to:
@@ -118,15 +124,15 @@ And also modify msg-broker-config under the same sink to point to:
 ${DEEPSTREAM_SDK_PATH}/sources/libs/aws_protocol_adaptor/device_client/cfg_aws.txt
 Next, you need to modify the topic to a topic name that you choose, and modify the first sink to a fake sink. Then, you can use the following command to run test5:
 ```
-./deepstream-test5-app -c configs/test5_config_file_src_infer_aws.txt 
+./deepstream-test5-app -c configs/test5_config_file_src_infer_aws.txt
 ```
 Now navigate to AWS IoT console, and on the menu bar on the left, click on test, type in test (or # to receive messages on all topics) in the subscription topic box, and click on *Subscribe to topic*, you should see MQTT messages start to show up on this console after app successfully runs.
 
 
 #### Processing IoT messages with AWS IoT rule
-Once you see messages coming into AWS IoT Core, there are a lot of options to further process them or store them on AWS cloud. One simple example would be to push these messages, using AWS IoT Rules, to a customized AWS Lambda function, which parses the messages and puts them in Amazon DynamoDB. You may find the following documents helpful in setting up this IoT rule to storage pipeline: 
-* [Creating a Rule with a AWS Lambda Action](https://docs.aws.amazon.com/iot/latest/developerguide/iot-lambda-rule.html) 
-* [Reading and Writing A Single Item in DynamoDB](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/dynamodb-example-table-read-write.html) 
+Once you see messages coming into AWS IoT Core, there are a lot of options to further process them or store them on AWS cloud. One simple example would be to push these messages, using AWS IoT Rules, to a customized AWS Lambda function, which parses the messages and puts them in Amazon DynamoDB. You may find the following documents helpful in setting up this IoT rule to storage pipeline:
+* [Creating a Rule with a AWS Lambda Action](https://docs.aws.amazon.com/iot/latest/developerguide/iot-lambda-rule.html)
+* [Reading and Writing A Single Item in DynamoDB](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/dynamodb-example-table-read-write.html)
 * [Implementing a Serverless AWS IoT Backend with AWS Lambda and Amazon DynamoDB](https://aws.amazon.com/blogs/compute/implementing-a-serverless-aws-iot-backend-with-aws-lambda-and-amazon-dynamodb/)
 
 The following documents may further assist you building a more production-ready data pipeline:
@@ -137,9 +143,9 @@ The following documents may further assist you building a more production-ready 
 
 ### Compatible with AWS IoT Greengrass
 
-This AWS DeepStream adaptor also supports connecting to AWS IoT Greengrass. You can modify <YOUR IOT HOST ADDRESS> in cfg_aws.txt to your Greengrass Endpoint/IP address. 
+This AWS DeepStream adaptor also supports connecting to AWS IoT Greengrass. You can modify <YOUR IOT HOST ADDRESS> in cfg_aws.txt to your Greengrass Endpoint/IP address.
 
-There are several options to find out Greengrass Endpoint/IP address. If you know the IP address of your Greengrass device or run “ifconfig” on your Greengrass device to find it out, you can directly put that as <YOUR IOT HOST ADDRESS>. AWS IoT Greengrass also provides a [Discovery API](https://docs.aws.amazon.com/greengrass/latest/developerguide/gg-discover-api.html), enabling devices to retrieve information required to connect to an AWS IoT Greengrass core that is in the same Greengrass group as the device. 
+There are several options to find out Greengrass Endpoint/IP address. If you know the IP address of your Greengrass device or run “ifconfig” on your Greengrass device to find it out, you can directly put that as <YOUR IOT HOST ADDRESS>. AWS IoT Greengrass also provides a [Discovery API](https://docs.aws.amazon.com/greengrass/latest/developerguide/gg-discover-api.html), enabling devices to retrieve information required to connect to an AWS IoT Greengrass core that is in the same Greengrass group as the device.
 
 For further information on enabling your device to connect to AWS IoT Greengrass, please follow module 4 in [AWS IoT Greengrass developer guide](https://docs.aws.amazon.com/greengrass/latest/developerguide/module4.html).
 
