@@ -28,11 +28,11 @@ cp -r aws_protocol_adaptor ${DEEPSTREAM_SDK_PATH}/sources/libs
 
 he shared library (.so file) is built and checked in the git repo you cloned in Step 1 in the aws_protocol_adaptor/device_client directory. If you want to build and customize your shared library, you can follow step 2 to compile with customized features such as optimized buffer size for incoming or outgoing MQTT messages, or TLS connection timeout values.
 
-If cloned or downloaded successfully, aws_protocol_adaptor should appear in your current path. Next, we need to create an empty directory for [AWS IoT device SDK](https://github.com/aws/aws-iot-device-sdk-embedded-C) library. We also need to clone the [AWS IoT device SDK](https://github.com/aws/aws-iot-device-sdk-embedded-C) in Embedded-C version 3 into this empty directory we created.
+If cloned or downloaded successfully, aws_protocol_adaptor should appear in your current path. Next, we need to create an empty directory for [AWS IoT device SDK](https://github.com/aws/aws-iot-device-sdk-embedded-C/tree/v3.1.1) library. We also need to clone the [AWS IoT device SDK](https://github.com/aws/aws-iot-device-sdk-embedded-C/tree/v3.1.1) in Embedded-C version 3 into this empty directory we created. (Please note that we are aware that AWS IoT Embedded SDK Version 4 does not currently work with this project. It is in our roadmap to support this latest version 4 SDK in the near future.)
 ```
 mkdir ${DEEPSTREAM_SDK_PATH}/sources/libs/aws_protocol_adaptor/aws-iot-sdk
 cd ${DEEPSTREAM_SDK_PATH}/sources/libs/aws_protocol_adaptor/aws-iot-sdk
-git clone https://github.com/aws/aws-iot-device-sdk-embedded-C.git .
+git clone --branch v3.1.1 https://github.com/aws/aws-iot-device-sdk-embedded-C.git
 ```
 This AWS IoT device SDK has an external dependency on Mbed TLS, so navigate to aws-iot-sdk/external_libs/. And clone the existing Mbed TLS repo in this folder:
 
